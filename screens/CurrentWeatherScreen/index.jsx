@@ -294,7 +294,18 @@ const parseMillisecondsIntoReadableTime = (seconds) => {
     date.setSeconds(seconds + 21600);
     var time = date.toLocaleTimeString();
     var timeArr = time.split(":");
-    return timeArr[0] + ":" + timeArr[1] + " " + time.split(" ")[1];
+    var hours = Number(timeArr[0]);
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : "12";
+    var minutes = Number(timeArr[1]);
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    console.log(time);
+    ampm = time.split(' ')[1];
+    if(ampm){
+        return timeArr[0] + ":" + timeArr[1] + " " + ampm;
+    }
+    return timeArr[0] + ":" + timeArr[1];
 }
 
 

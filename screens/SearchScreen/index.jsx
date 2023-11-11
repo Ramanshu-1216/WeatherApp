@@ -7,7 +7,7 @@ const back = require('../../res/images/appIcons/back.png');
 const search = require('../../res/images/appIcons/search.png');
 const locationPin = require('../../res/images/appIcons/locationPin.png');
 const SearchScreen = ({ navigation }) => {
-    const [city, setCity] = useState<String>("");
+    const [city, setCity] = useState("");
     const searchHandle = () => {
         if(city == ""){
             ToastAndroid.show("Enter a valid city", ToastAndroid.SHORT);
