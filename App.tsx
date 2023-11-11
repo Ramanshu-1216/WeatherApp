@@ -2,10 +2,10 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CurrentWeatherScreen from './screens/CurrentWeatherScreen';
+import CurrentWeatherScreen from './screens/CurrentWeatherScreen/index.jsx';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import SearchScreen from './screens/SearchScreen';
-import DailyForcast from './screens/DailyForcast';
+import DailyForcast from './screens/DailyForcast/index.jsx';
 import TodayForcastScreen from './screens/TodayForcastScreen';
 import SplashScreen from './screens/SplashScreen';
 

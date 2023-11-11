@@ -3,9 +3,7 @@ import React, { useEffect } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStack } from '../../App';
 
-type SplashScreenProps = NativeStackScreenProps<RootStack>;
-
-const SplashScreen = ({ navigation }: SplashScreenProps) => {
+const SplashScreen = ({ navigation }) => {
     useEffect(() => {
         setTimeout(() => {
             navigation.navigate('Home', undefined);

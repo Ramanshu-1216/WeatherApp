@@ -1,7 +1,7 @@
 import { View } from "react-native"
 import {createDrawerNavigator} from '@react-navigation/drawer'
 import { NavigationContainer } from "@react-navigation/native";
-import CurrentWeatherScreen from "../CurrentWeatherScreen";
+import CurrentWeatherScreen from "../CurrentWeatherScreen/index.jsx";
 
 const Drawer = createDrawerNavigator();
 const HomeScreen = () => {

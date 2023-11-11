@@ -6,50 +6,10 @@ import { useRoute } from '@react-navigation/native';
 const back = require('../../res/images/appIcons/back.png');
 const temperature = require('../../res/images/appIcons/img_1.png');
 
-type DataProp = {
-    "dt": 1699700400,
-    "sunrise": 0,
-    "sunset": 0,
-    "moonrise": 1699683420,
-    "moonset": 1699699140,
-    "moon_phase": 0.94,
-    "temp": {
-        "day": 259.77,
-        "min": 256.76,
-        "max": 265.24,
-        "night": 265.24,
-        "eve": 261.11,
-        "morn": 256.76
-    },
-    "feels_like": {
-        "day": 255.57,
-        "night": 258.96,
-        "eve": 255.16,
-        "morn": 256.76
-    },
-    "pressure": 1020,
-    "humidity": 95,
-    "dew_point": 257.26,
-    "wind_speed": 4.22,
-    "wind_deg": 203,
-    "wind_gust": 6.4,
-    "weather": [
-        {
-            "id": 804,
-            "main": "Clouds",
-            "description": "overcast clouds",
-            "icon": "04d"
-        }
-    ],
-    "clouds": 96,
-    "pop": 0.04,
-    "uvi": 0
-}
-type DailyScreenProps = NativeStackScreenProps<RootStack>;
-const DailyForcast = ({ navigation }: DailyScreenProps) => {
+const DailyForcast = ({ navigation }) => {
     const route = useRoute();
-    const data: Array<DataProp> = route.params?.data;
-    const DailyView = (item: DataProp) => {
+    const data = route.params?.data;
+    const DailyView = (item) => {
         item = item.item.item;
         const date = new Date();
         date.setSeconds(item.dt);
@@ -91,7 +51,7 @@ const DailyForcast = ({ navigation }: DailyScreenProps) => {
     )
 }
 
-const getIcon = (icon: string) => {
+const getIcon = (icon) => {
     switch (icon) {
         case "01d":
             return require('../../res/images/weatherIcons/01d.png');
@@ -128,7 +88,7 @@ const getIcon = (icon: string) => {
     }
 }
 
-const getDay = (day: number) => {
+const getDay = (day) => {
     switch (day) {
         case 0:
             return "Sunday";
@@ -147,4 +107,4 @@ const getDay = (day: number) => {
     }
     return "";
 }
-export default DailyForcast
+export default DailyForcast;

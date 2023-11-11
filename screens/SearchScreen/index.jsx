@@ -6,8 +6,7 @@ const background = require('../../res/images/backgrounds/searchCity.jpg');
 const back = require('../../res/images/appIcons/back.png');
 const search = require('../../res/images/appIcons/search.png');
 const locationPin = require('../../res/images/appIcons/locationPin.png');
-type SearchScreenProps = NativeStackScreenProps<RootStack>;
-const SearchScreen = ({ navigation }: SearchScreenProps) => {
+const SearchScreen = ({ navigation }) => {
     const [city, setCity] = useState<String>("");
     const searchHandle = () => {
         if(city == ""){

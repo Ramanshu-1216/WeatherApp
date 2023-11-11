@@ -5,21 +5,12 @@ import { RootStack } from '../../App';
 import { useRoute } from '@react-navigation/native';
 const back = require('../../res/images/appIcons/back.png');
 
-type TodayScreenProps = NativeStackScreenProps<RootStack>;
-
-type HourlyBarProps = {
-    temp: number,
-    descrip: String,
-    icon: ImageSourcePropType,
-    time: String
-}
-
-const TodayForcastScreen = ({ navigation }: TodayScreenProps) => {
+const TodayForcastScreen = ({ navigation }) => {
     const route = useRoute();
-    const dailyData: Array<any> = route.params?.dailyData;
-    const hourlyData: Array<any> = route.params?.hourlyData;
+    const dailyData = route.params?.dailyData;
+    const hourlyData = route.params?.hourlyData;
 
-    const getTime = (seconds: number) => {
+    const getTime = (seconds) => {
         const date = new Date();
         date.setSeconds(seconds + 19800);
         var hours = date.getHours();
@@ -31,7 +22,7 @@ const TodayForcastScreen = ({ navigation }: TodayScreenProps) => {
         var strTime = hours + ':' + minute + ' ' + ampm;
         return strTime;
     }
-    const HourlyView = ({ temp, descrip, icon, time }: HourlyBarProps) => (
+    const HourlyView = ({ temp, descrip, icon, time }) => (
         <View style={{ alignItems: 'center', flex: 1 }}>
             <Text style={{ fontWeight: 'bold', color: '#000', fontSize: 15 }}>{temp}°C</Text>
             <Text style={{ fontWeight: 'bold', color: "#808080", fontSize: 9 }}>{descrip}</Text>
@@ -64,7 +55,7 @@ const TodayForcastScreen = ({ navigation }: TodayScreenProps) => {
         </View>
     )
 }
-const getIcon = (icon: string) => {
+const getIcon = (icon) => {
     switch (icon) {
         case "01d":
             return require('../../res/images/weatherIcons/01d.png');
@@ -100,7 +91,7 @@ const getIcon = (icon: string) => {
             return require('../../res/images/weatherIcons/50n.png');
     }
 }
-const parseMillisecondsIntoReadableTime = (seconds: number) => {
+const parseMillisecondsIntoReadableTime = (seconds) => {
     const date = new Date();
     date.setSeconds(seconds + 21600);
     var time = date.toLocaleTimeString();

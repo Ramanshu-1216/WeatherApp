@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStack } from "../../App";
 import { useIsFocused, useRoute } from "@react-navigation/native";
+import Styles from "./styles";
 const morningBg1 = require('../../res/images/backgrounds/1.jpg');
 const locationPin = require('../../res/images/appIcons/locationPin.png');
 const clouds = require('../../res/images/weatherIcons/03d.png');
@@ -15,71 +16,36 @@ const reloadIcon = require('../../res/images/appIcons/refresh.png');
 const startIcon = require('../../res/images/appIcons/star.png');
 const searchIcon = require('../../res/images/appIcons/search.png');
 // import {API_KEY} from '@env'; 
-type DetailsBarProps = {
-    icon: ImageSourcePropType,
-    title: String,
-    value: String
-}
-type HourlyBarProps = {
-    temp: number,
-    descrip: String,
-    icon: ImageSourcePropType,
-    time: String
-}
-type ItemProps = {
-    temp: number,
-    weather: Array<{
-        description: String,
-        icon: String,
-    }>,
-    dt: number,
-}
-type currentProps = {
-    temp: number,
-    humidity: number,
-    wind_gust: number,
-    weather: Array<{
-        description: String,
-        icon: String,
-    }>,
-};
-const DetailsBarView = ({ icon, title, value }: DetailsBarProps) => {
+
+const DetailsBarView = ({ icon, title, value }) => {
     return (
-        <View style={{ alignItems: 'center', flex: 1 }}>
+        <View style={Styles.detailsViewContainer}>
             <Image source={icon} style={{ width: 25, height: 25, margin: 5 }} />
-            <Text style={{ fontWeight: 'bold', color: "#808080" }}>{title}</Text>
-            <Text style={{ fontWeight: 'bold', color: '#000', fontSize: 15 }}>{value}</Text>
+            <Text style={Styles.detailsViewText}>{title}</Text>
+            <Text style={Styles.detailsViewValue}>{value}</Text>
         </View>
     );
 }
-const HourlyView = ({ temp, descrip, icon, time }: HourlyBarProps) => (
-    <View style={{ alignItems: 'center', flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', color: '#000', fontSize: 15 }}>{temp}°C</Text>
-        <Text style={{ fontWeight: 'bold', color: "#808080", fontSize: 9 }}>{descrip}</Text>
-        <Image source={icon} style={{ width: 80, height: 50, margin: 5 }} resizeMode="contain" />
-        <Text style={{ fontWeight: 'bold', color: "#808080" }}>{time}</Text>
+const HourlyView = ({ temp, descrip, icon, time }) => (
+    <View style={Styles.hourlyViewContainer}>
+        <Text style={Styles.hourlyViewTextTemp}>{temp}°C</Text>
+        <Text style={Styles.hourlyViewDescrip}>{descrip}</Text>
+        <Image source={icon} style={Styles.hourlyViewIcon} resizeMode="contain" />
+        <Text style={Styles.hourlyViewTime}>{time}</Text>
     </View>
 );
 
-type SearchProps = {
-    long: String,
-    lat: String,
-    city: String,
-}
-
-type CurrentScreenProps = NativeStackScreenProps<RootStack>;
-
-const CurrentWeatherScreen = ({ navigation }: CurrentScreenProps) => {
-    const [cordinates, setCordinates] = useState<Array<number>>([0, 0]);
+const CurrentWeatherScreen = ({ navigation }) => {
+    const [cordinates, setCordinates] = useState([0, 0]);
     const route = useRoute();
-    var lat: String = route.params?.lat;
-    var long: String = route.params?.long;
-    const cityp: String = route.params?.city;
+    var lat = route.params?.lat;
+    var long = route.params?.long;
+    const cityp = route.params?.city;
     const [city, setCity] = useState("");
     const [currentWeather, setCurrentWeather] = useState({ temp: 0, humidity: 0, wind_gust: 0, weather: [{ description: "Wait a minute", icon: "03d" }] });
-    const [updatedTime, updateTime] = useState<String>();
-    const [currentIcon, setCurrentIcon] = useState<ImageSourcePropType>();
-    const [hourlyData, setHourlyData] = useState<ItemProps>();
+    const [updatedTime, updateTime] = useState("");
+    const [currentIcon, setCurrentIcon] = useState();
+    const [hourlyData, setHourlyData] = useState();
     const isFocus = useIsFocused();
     const [drawer,  toggleDrawer] = useState(false);
     const [dailyData, setDailyData] = useState([]);
@@ -96,6 +62,7 @@ const CurrentWeatherScreen = ({ navigation }: CurrentScreenProps) => {
                 console.log([Number(lat), Number(long)]);
             }
         }
+
     }, [isFocus]);
 
     useEffect(() => {
@@ -127,8 +94,8 @@ const CurrentWeatherScreen = ({ navigation }: CurrentScreenProps) => {
     }
 
     const Drawer = () => (
-        drawer && <TouchableOpacity style={{ flex: 1, flexDirection: 'column', position: 'absolute', backgroundColor: 'rgba(0, 0, 0, 0.5)', width: '140%', height: '110%', zIndex: 10, elevation: 10 }} activeOpacity={1} onPress={() => toggleDrawer(false)}>
-            <View style={{backgroundColor: '#FFF', width: '70%', height: '110%'}}>
+        drawer && <TouchableOpacity style={Styles.drawerContainer} activeOpacity={1} onPress={() => toggleDrawer(false)}>
+            <View style={Styles.drawerBranding}>
                 <View style={{ alignItems: 'center', marginVertical: 100 }}>
                     <Text style={{ fontSize: 70, color: '#00FFFF', fontWeight: 'bold' }}>ENVO</Text>
                     <Text style={{ color: '#808080' }}>WEATHER ASSISTANT</Text>
@@ -207,7 +174,7 @@ const CurrentWeatherScreen = ({ navigation }: CurrentScreenProps) => {
     );
 }
 
-const getDay = (day: number) => {
+const getDay = (day) => {
     switch (day) {
         case 0:
             return "Sun";
@@ -226,7 +193,7 @@ const getDay = (day: number) => {
     }
     return "";
 }
-const getMonth = (month: number) => {
+const getMonth = (month) => {
     switch (month) {
         case 0:
             return "January";
@@ -255,7 +222,7 @@ const getMonth = (month: number) => {
     }
     return "";
 }
-const getAMPM = (date: Date) => {
+const getAMPM = (date) => {
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -286,7 +253,7 @@ const getBg = () => {
         return require('../../res/images/backgrounds/4.jpg');
     }
 }
-const getIcon = (icon: string) => {
+const getIcon = (icon) => {
     switch (icon) {
         case "01d":
             return require('../../res/images/weatherIcons/01d.png');
@@ -322,7 +289,7 @@ const getIcon = (icon: string) => {
             return require('../../res/images/weatherIcons/50n.png');
     }
 }
-const parseMillisecondsIntoReadableTime = (seconds: number) => {
+const parseMillisecondsIntoReadableTime = (seconds) => {
     const date = new Date();
     date.setSeconds(seconds + 21600);
     var time = date.toLocaleTimeString();
